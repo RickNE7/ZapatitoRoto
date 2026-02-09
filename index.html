@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis: Zapatito Roto S.A.C.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .slide { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .slide.active { display: flex; opacity: 1; }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-slate-100 h-screen flex items-center justify-center overflow-hidden">
+
+    <!-- Main Container -->
+    <div class="bg-white w-full max-w-6xl h-[90vh] md:h-[800px] rounded-3xl shadow-2xl relative flex flex-col overflow-hidden">
+
+        <!-- Header / Progress -->
+        <div class="h-2 bg-slate-100 w-full">
+            <div id="progress-bar" class="h-full bg-blue-600 transition-all duration-500 w-[16%]"></div>
+        </div>
+
+        <!-- Slides Container -->
+        <div class="flex-grow relative p-8 md:p-12 overflow-y-auto" id="slides-container">
+
+            <!-- SLIDE 1: INTRO -->
+            <div class="slide active flex-col items-center justify-center h-full text-center space-y-6" id="slide-0">
+                <div class="p-6 bg-blue-50 rounded-full mb-4 fade-in-up">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 fade-in-up delay-100">
+                    Caso de Negocio:<br><span class="text-blue-600">Zapatito Roto S.A.C.</span>
+                </h1>
+                <p class="text-xl text-slate-500 max-w-2xl mx-auto fade-in-up delay-200">
+                    Comparativa Estratégica: <span class="text-red-500 font-semibold">Despacho Excepcional</span> vs. <span class="text-emerald-600 font-semibold">Despacho Anticipado</span>
+                </p>
+                <div class="mt-8 p-4 bg-slate-50 border border-slate-200 rounded-xl fade-in-up delay-300">
+                    <p class="text-slate-600 font-medium">Objetivo: Demostrar el impacto en Costos, Tiempos y Flujo de Caja.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: OPERATIVA -->
+            <div class="slide flex-col h-full" id="slide-1">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Diferencias Operativas</h2>
+                <p class="text-slate-500 text-lg mb-8">El origen de los costos: Gestión del Tiempo y Aduanas</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
+                    <!-- Excepcional Card -->
+                    <div class="bg-red-50 p-6 rounded-2xl border border-red-100 fade-in-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-red-100 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-red-700">Caso Excepcional</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-red-100 text-red-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">15 Días</span>
+                                <p class="text-slate-600 text-sm">Tiempo de retiro. La carga ingresa obligatoriamente a depósito temporal.</p>
+                            </li>
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-red-100 text-red-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">Canal Rojo</span>
+                                <p class="text-slate-600 text-sm">Requiere aforo físico, cuadrilla y movilización.</p>
+                            </li>
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-red-100 text-red-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">Pago Hoy</span>
+                                <p class="text-slate-600 text-sm">Impuestos inmediatos. Financiamiento con Agente (3% interés).</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Anticipado Card -->
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 fade-in-up delay-100">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-emerald-100 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-emerald-700">Caso Anticipado</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">48 Horas</span>
+                                <p class="text-slate-600 text-sm">Retiro directo del puerto al local del importador.</p>
+                            </li>
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">Canal Verde</span>
+                                <p class="text-slate-600 text-sm">Levante automático. Sin costos de aforo.</p>
+                            </li>
+                            <li class="bg-white p-4 rounded-xl shadow-sm flex items-start gap-4">
+                                <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded text-sm whitespace-nowrap">Difiere Pago</span>
+                                <p class="text-slate-600 text-sm">Uso de Carta Fianza. Paga impuestos el día 20 del mes siguiente.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: GASTOS -->
+            <div class="slide flex-col h-full" id="slide-2">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Impacto en Gastos de Importación</h2>
+                <p class="text-slate-500 text-lg mb-6">Eliminación de sobrecostos logísticos</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <!-- Chart -->
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 h-80 relative fade-in-up">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+
+                    <!-- Breakdown -->
+                    <div class="space-y-6 fade-in-up delay-100">
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                            <h4 class="text-slate-500 text-xs uppercase font-bold mb-4 tracking-wider">Ahorros Directos (Sobrecostos Eliminados)</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center text-sm border-b border-slate-200 pb-2">
+                                    <span class="text-slate-600">Almacenaje (Depósito)</span>
+                                    <span class="font-mono text-red-500 line-through">US$ 276.00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm border-b border-slate-200 pb-2">
+                                    <span class="text-slate-600">Intereses Agente (3%)</span>
+                                    <span class="font-mono text-red-500 line-through">US$ 222.92</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm border-b border-slate-200 pb-2">
+                                    <span class="text-slate-600">Servicios Aforo y Movilización</span>
+                                    <span class="font-mono text-red-500 line-through">US$ 108.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                            <div>
+                                <p class="text-emerald-800 font-medium">Ahorro Neto Total</p>
+                                <p class="text-xs text-emerald-600">Por operación</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-3xl font-bold text-emerald-600">US$ 645.92</p>
+                                <p class="text-xs text-slate-400">(-45% en Gastos)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: P&L -->
+            <div class="slide flex-col h-full" id="slide-3">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Rentabilidad (Estado de Resultados)</h2>
+                <p class="text-slate-500 text-lg mb-8">Impacto directo en la Utilidad Neta</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="col-span-1 md:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center fade-in-up">
+                        <p class="text-xs text-slate-400 uppercase font-bold mb-2">Costo Unitario Promedio</p>
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-lg text-slate-400 line-through">$17.47</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                            <span class="text-3xl font-bold text-slate-800">$16.63</span>
+                        </div>
+                        <p class="text-sm text-emerald-600 font-medium mt-2">Más competitivo</p>
+                    </div>
+                    
+                    <div class="col-span-1 md:col-span-2 bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl shadow-lg text-white flex flex-col justify-center relative overflow-hidden fade-in-up delay-100">
+                        <div class="relative z-10 flex justify-around items-center">
+                            <div class="text-center opacity-60">
+                                <p class="text-sm uppercase tracking-widest mb-1">Utilidad Excepcional</p>
+                                <p class="text-2xl font-mono">$6,299</p>
+                            </div>
+                            <div class="h-12 w-px bg-slate-600"></div>
+                            <div class="text-center">
+                                <p class="text-sm text-emerald-400 uppercase tracking-widest mb-1 font-bold">Utilidad Anticipada</p>
+                                <p class="text-4xl font-mono font-bold text-emerald-400">$7,649</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center z-10">
+                            <span class="bg-emerald-500/20 text-emerald-300 px-4 py-1 rounded-full text-sm font-bold border border-emerald-500/30">
+                                + US$ 1,350 (+21.4%) de Ganancia Líquida
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-grow bg-white p-4 rounded-2xl border border-slate-100 shadow-sm fade-in-up delay-200 relative">
+                     <canvas id="profitChart" style="max-height: 250px;"></canvas>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: CASH FLOW -->
+            <div class="slide flex-col justify-center h-full" id="slide-4">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Flujo de Caja y Liquidez</h2>
+                <p class="text-slate-500 text-lg mb-8">¿Cuánto dinero necesitas HOY para retirar la carga?</p>
+
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200 fade-in-up">
+                    
+                    <!-- Excepcional Bar -->
+                    <div class="mb-8">
+                        <div class="flex justify-between mb-2 items-end">
+                            <span class="text-red-500 font-bold flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
+                                Caso Excepcional
+                            </span>
+                            <span class="text-2xl font-mono font-bold text-slate-700">S/ 48,372.86</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-8 rounded-full overflow-hidden relative">
+                            <div class="h-full bg-red-400 w-full flex items-center justify-end px-4 text-xs text-white font-bold">100% PAGO INMEDIATO</div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">Pago total de Impuestos + Gastos Logísticos al contado.</p>
+                    </div>
+
+                    <!-- Anticipado Bar -->
+                    <div>
+                        <div class="flex justify-between mb-2 items-end">
+                            <span class="text-emerald-600 font-bold flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                Caso Anticipado
+                            </span>
+                            <span class="text-2xl font-mono font-bold text-slate-700">S/ 27,854.66</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-8 rounded-full overflow-hidden relative flex">
+                            <div class="h-full bg-emerald-500 flex items-center justify-center text-xs text-white font-bold shadow-lg z-10" style="width: 57%">PAGO HOY</div>
+                            <div class="h-full bg-slate-200 flex items-center justify-center text-xs text-slate-500 font-bold border-l border-white" style="width: 43%">RETENIDO (S/ 20,518)</div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2">
+                            <strong class="text-emerald-600">Ventaja:</strong> Mantienes S/ 20,518 en tu cuenta por ~30 días más gracias a la Garantía (Art. 160 LGA).
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SLIDE 6: VERDICT -->
+            <div class="slide flex-col justify-between h-full" id="slide-5">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center">Veredicto del Experto</h2>
+                    <p class="text-slate-500 text-lg mb-8 text-center">Recomendación Final para Zapatito Roto S.A.C.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white border-t-4 border-blue-500 p-6 shadow-lg rounded-b-xl transform transition hover:-translate-y-1 fade-in-up">
+                            <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Más Rápido</h3>
+                            <p class="text-sm text-slate-600">De 15 días a 48 horas. Disponibilidad inmediata para ventas.</p>
+                        </div>
+                        <div class="bg-white border-t-4 border-emerald-500 p-6 shadow-lg rounded-b-xl transform transition hover:-translate-y-1 fade-in-up delay-100">
+                            <div class="bg-emerald-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Más Rentable</h3>
+                            <p class="text-sm text-slate-600">Ahorro de $645 en costos y +21% en Utilidad Neta.</p>
+                        </div>
+                        <div class="bg-white border-t-4 border-purple-500 p-6 shadow-lg rounded-b-xl transform transition hover:-translate-y-1 fade-in-up delay-200">
+                            <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Más Liquidez</h3>
+                            <p class="text-sm text-slate-600">Capital de trabajo optimizado al diferir impuestos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 text-white p-8 rounded-2xl text-center mt-8 fade-in-up delay-300">
+                    <h2 class="text-2xl font-bold mb-4">Decisión Recomendada: DESPACHO ANTICIPADO</h2>
+                    <button class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full transition-colors inline-flex items-center gap-2 shadow-lg hover:shadow-emerald-500/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        Solicitar Presupuesto Optimizado
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Footer -->
+        <div class="bg-slate-50 p-6 border-t border-slate-200 flex justify-between items-center z-10">
+            <div class="text-sm font-medium text-slate-400">
+                Slide <span id="current-slide-num">1</span> / <span id="total-slides">6</span>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="prevSlide()" id="btn-prev" class="p-3 rounded-full bg-white text-slate-700 shadow hover:bg-slate-100 hover:shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                
+                <button onclick="nextSlide()" id="btn-next" class="px-6 py-3 rounded-full font-bold flex items-center gap-2 bg-blue-600 text-white shadow-lg hover:bg-blue-700 hover:shadow-xl transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="btn-next-text">Siguiente</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progress-bar');
+        const currentSlideNum = document.getElementById('current-slide-num');
+        const totalSlidesNum = document.getElementById('total-slides');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+
+        // Charts
+        let expensesChart = null;
+        let profitChart = null;
+
+        totalSlidesNum.textContent = totalSlides;
+
+        function updateUI() {
+            // Update Slides
+            slides.forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.add('active');
+                    // Trigger animations by re-adding class
+                    const animatedElements = slide.querySelectorAll('.fade-in-up');
+                    animatedElements.forEach(el => {
+                        el.style.animation = 'none';
+                        el.offsetHeight; /* trigger reflow */
+                        el.style.animation = null; 
+                    });
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Progress
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Update Counters
+            currentSlideNum.textContent = currentSlide + 1;
+
+            // Update Buttons
+            btnPrev.disabled = currentSlide === 0;
+            btnNext.disabled = currentSlide === totalSlides - 1;
+            
+            if (currentSlide === totalSlides - 1) {
+                btnNextText.textContent = "Finalizar";
+                btnNext.classList.replace('bg-blue-600', 'bg-slate-500');
+            } else {
+                btnNextText.textContent = "Siguiente";
+                btnNext.classList.replace('bg-slate-500', 'bg-blue-600');
+            }
+
+            // Render Charts if on specific slide
+            if(currentSlide === 2) renderExpensesChart();
+            if(currentSlide === 3) renderProfitChart();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        // Charts Configuration
+        function renderExpensesChart() {
+            if(expensesChart) return; // Prevent re-rendering
+            const ctx = document.getElementById('expensesChart').getContext('2d');
+            expensesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Despacho Excepcional', 'Despacho Anticipado'],
+                    datasets: [{
+                        label: 'Gastos de Importación (USD)',
+                        data: [1442.82, 796.90],
+                        backgroundColor: ['#f87171', '#10b981'],
+                        borderRadius: 8,
+                        barThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Comparativa de Gastos Logísticos (USD)' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function renderProfitChart() {
+            if(profitChart) return;
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Excepcional', 'Anticipado'],
+                    datasets: [{
+                        label: 'Utilidad Neta (USD)',
+                        data: [6299.66, 7649.61],
+                        backgroundColor: ['#94a3b8', '#059669'],
+                        borderRadius: 6,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Initial call
+        updateUI();
+
+    </script>
+</body>
+</html>
