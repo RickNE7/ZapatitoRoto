@@ -93,9 +93,9 @@
 
         .nav-num {
             background: rgba(255,255,255,0.1);
-            min-width: 20px; height: 20px;
+            min-width: 24px; height: 24px;
             display: flex; align-items: center; justify-content: center;
-            border-radius: 4px; font-size: 0.7rem; font-weight: 700;
+            border-radius: 6px; font-size: 0.75rem; font-weight: 700;
         }
         .nav-item.active .nav-num { background: var(--primary); }
 
@@ -106,6 +106,7 @@
             letter-spacing: 0.05em;
             color: #64748B;
             font-weight: 700;
+            margin-top: 5px;
         }
 
         .simulator-btn {
@@ -167,7 +168,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: hidden; /* IMPORTANTE: Evita desbordes */
+            overflow: hidden; 
         }
 
         .col-12 { grid-column: span 12; }
@@ -188,10 +189,9 @@
         /* --- CHART CONTAINER CONSTRAINT (CRÍTICO) --- */
         .chart-box {
             position: relative;
-            height: 280px; /* Altura fija controlada */
+            height: 250px; /* Altura fija controlada */
             width: 100%;
             max-width: 100%; 
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -199,6 +199,7 @@
         canvas {
             max-width: 100% !important;
             max-height: 100% !important;
+            object-fit: contain;
         }
 
         /* --- TIMELINE --- */
@@ -221,6 +222,11 @@
         }
         .tag-pay.now { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
         .tag-pay.later { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+        
+        .legend { display: flex; gap: 15px; margin-bottom: 20px; font-size: 0.8rem; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot-red { width: 10px; height: 10px; background: var(--danger); border-radius: 50%; }
+        .dot-green { width: 10px; height: 10px; background: var(--secondary); border-radius: 50%; }
 
         /* --- SIMULADOR --- */
         .sim-panel { background: #1E1B4B; color: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(30, 27, 75, 0.3); }
@@ -275,7 +281,7 @@
             .kpi-row { grid-template-columns: 1fr 1fr; }
             .sim-controls { grid-template-columns: 1fr; }
             .table-wrap { margin-bottom: 10px; }
-            .chart-box { height: 220px; }
+            .chart-box { height: 200px; }
             h1 { font-size: 1.4rem; }
             .page-header h1 { font-size: 1.3rem; }
         }
@@ -287,11 +293,11 @@
 
     <nav class="sidebar" id="sidebar">
         <div class="brand">
-            <i class="fa-solid fa-chart-pie" style="color:#60A5FA;"></i> Caso Zoila Baca
+            <i class="fa-solid fa-chart-pie" style="color:#60A5FA;"></i> Zapatito Roto S.A.C. 👞
         </div>
         <ul class="nav-menu">
             <li class="nav-item active" onclick="loadPage(0)"><div class="nav-num"><i class="fa-solid fa-home"></i></div> Portada</li>
-            <li class="nav-item" onclick="loadPage(1)"><div class="nav-num"><i class="fa-solid fa-timeline"></i></div> Diferencias Op.</li>
+            <li class="nav-item" onclick="loadPage(1)"><div class="nav-num"><i class="fa-solid fa-clock"></i></div> Diferencias Op.</li>
             
             <div class="nav-group-title">Estructura de Costos</div>
             <li class="nav-item" onclick="loadPage(2)"><div class="nav-num">1</div> Base Imponible</li>
@@ -303,9 +309,9 @@
             <li class="nav-item" onclick="loadPage(8)"><div class="nav-num">7</div> Costo Total</li>
             
             <div class="nav-group-title">Análisis Comercial</div>
-            <li class="nav-item" onclick="loadPage(9)"><div class="nav-num">8</div> Precio de Venta</li>
+            <li class="nav-item" onclick="loadPage(9)"><div class="nav-num">8</div> Precio Venta</li>
             <li class="nav-item" onclick="loadPage(10)"><div class="nav-num">9</div> Compras Nac.</li>
-            <li class="nav-item" onclick="loadPage(11)"><div class="nav-num">10</div> Liquidación IGV</li>
+            <li class="nav-item" onclick="loadPage(11)"><div class="nav-num">10</div> Liq. IGV</li>
             <li class="nav-item" onclick="loadPage(12)"><div class="nav-num">11</div> Resumen Pagos</li>
             <li class="nav-item" onclick="loadPage(13)"><div class="nav-num">12</div> Estado Result.</li>
             <li class="nav-item" onclick="loadPage(14)"><div class="nav-num">13</div> Flujo de Caja</li>
@@ -344,12 +350,11 @@
             // Highlight Logic
             const navItems = document.querySelectorAll('.nav-item');
             if (pageId <= 14) {
-                // Mapeo directo para items 0-14
+                 // Buscar por índice aproximado o por lógica de click
                  const target = Array.from(navItems).find(item => item.getAttribute('onclick') === `loadPage(${pageId})`);
                  if(target) target.classList.add('active');
             } else {
-                // Simulador
-                document.querySelector('.simulator-btn').parentElement.classList.add('active'); // Fallback visual
+                document.querySelector('.simulator-btn').parentElement.classList.add('active');
             }
 
             // Close mobile menu
@@ -363,91 +368,98 @@
             let content = '';
 
             switch(pageId) {
-                case 0: // PORTADA (Sin Nombre)
+                case 0: // PORTADA
                     content = `
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:80vh; text-align:center; animation:fadeIn 1s;">
-                        <div style="font-size:3.5rem; color:var(--primary); margin-bottom:20px;">
-                            <i class="fa-solid fa-briefcase"></i>
+                        <div style="width:80px; height:80px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2.5rem; margin-bottom:25px; box-shadow:0 10px 25px rgba(37,99,235,0.3);">
+                            <i class="fa-solid fa-shoe-prints"></i>
                         </div>
-                        <h1 style="font-size:2.2rem; color:var(--dark); margin-bottom:15px; font-weight:800; line-height:1.2;">
-                            Análisis de Caso:<br>
-                            <span style="color:var(--primary);">"Zapatito Roto"</span>
+                        <h1 style="font-size:2.5rem; color:var(--dark); margin-bottom:10px; font-weight:800; line-height:1.2;">
+                            CASO DE NEGOCIO<br>
+                            <span style="color:var(--primary);">IMPORTACIÓN DE CALZADO</span>
                         </h1>
                         <p style="font-size:1.1rem; color:var(--text-light); max-width:600px; margin-bottom:40px;">
-                            Evaluación comparativa de estrategias logísticas y financieras para la importación de calzado.
+                            Análisis comparativo de estrategias logísticas: <br>Despacho Diferido vs. Despacho Anticipado
                         </p>
                         
-                        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                        <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
                             <div style="background:white; padding:15px 25px; border-radius:10px; box-shadow:var(--shadow); display:flex; align-items:center; gap:10px;">
-                                <i class="fa-solid fa-trophy" style="color:var(--warning);"></i>
-                                <div style="text-align:left;">
-                                    <div style="font-size:0.75rem; color:#64748B;">Objetivo</div>
-                                    <div style="font-weight:700; color:#1E293B;">Maximizar Valor</div>
-                                </div>
+                                <i class="fa-solid fa-chart-line" style="color:var(--secondary);"></i>
+                                <div style="text-align:left; font-size:0.85rem;"><strong>Optimización</strong><br>Costos</div>
+                            </div>
+                             <div style="background:white; padding:15px 25px; border-radius:10px; box-shadow:var(--shadow); display:flex; align-items:center; gap:10px;">
+                                <i class="fa-solid fa-wallet" style="color:var(--primary);"></i>
+                                <div style="text-align:left; font-size:0.85rem;"><strong>Gestión</strong><br>Flujo de Caja</div>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" style="margin-top:40px; padding:15px 40px; font-size:1rem;" onclick="loadPage(1)">
-                            Comenzar Presentación <i class="fa-solid fa-arrow-right"></i>
+                        <button class="btn btn-primary" style="margin-top:50px; padding:15px 40px; font-size:1rem;" onclick="loadPage(1)">
+                            Iniciar Análisis <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>`;
                     break;
 
-                case 1: // DIFERENCIAS OPERATIVAS (Timeline detallado)
-                    content = renderHeader("Diferencias Operativas", "Cronograma comparativo de la operación.");
+                case 1: // DIFERENCIAS OPERATIVAS
+                    content = renderHeader("Diferencias Operativas", "Línea de tiempo y momentos clave de pago.");
                     content += `
+                    <div class="legend">
+                        <div class="legend-item"><div class="dot-red"></div> Despacho Diferido (Tradicional)</div>
+                        <div class="legend-item"><div class="dot-green"></div> Despacho Anticipado (Recomendado)</div>
+                    </div>
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
                             <h3 style="color:var(--danger); border-bottom:2px solid #FECACA; padding-bottom:10px; margin-bottom:20px; font-size:1rem;">
-                                <i class="fa-solid fa-warehouse"></i> DESPACHO DIFERIDO
+                                <i class="fa-solid fa-warehouse"></i> FLUJO DIFERIDO
                             </h3>
                             <div class="timeline">
                                 <div class="t-item t-dif">
                                     <div class="t-dot"></div><span class="t-date">DÍA 0 (Llegada)</span>
-                                    <div class="t-title">Descarga a Depósito</div>
-                                    <div class="t-desc">La carga es trasladada obligatoriamente a un depósito temporal.</div>
+                                    <div class="t-title">Descarga a Depósito Temporal</div>
+                                    <div class="t-desc">La carga va obligatoriamente a almacén extraportuario.</div>
                                 </div>
                                 <div class="t-item t-dif">
-                                    <div class="t-dot"></div><span class="t-date">DÍA 1 - 7+</span>
-                                    <div class="t-title">Trámites y Almacenaje</div>
-                                    <div class="t-desc">Se genera costo diario de almacenaje, movilización y aforo.</div>
+                                    <div class="t-dot"></div><span class="t-date">DÍA 1 - 7</span>
+                                    <div class="t-title">Almacenaje y Trámites</div>
+                                    <div class="t-desc">Costos diarios por almacenaje, movilización y aforo.</div>
                                 </div>
                                 <div class="t-item t-dif">
                                     <div class="t-dot"></div><span class="t-date">DÍA 8</span>
                                     <div class="t-title">Pago de Impuestos</div>
-                                    <div class="t-desc">Desembolso de efectivo ($5,567) para obtener el levante.</div>
-                                    <span class="tag-pay now"><i class="fa-solid fa-money-bill"></i> PAGO INMEDIATO</span>
+                                    <div class="t-desc">Desembolso total de tributos ($5,567) para obtener levante.</div>
+                                    <span class="tag-pay now"><i class="fa-solid fa-money-bill"></i> CAJA: -$14,747 USD</span>
                                 </div>
                                 <div class="t-item t-dif">
                                     <div class="t-dot"></div><span class="t-date">DÍA 9+</span>
-                                    <div class="t-title">Levante de Mercancía</div>
-                                    <div class="t-desc">Retiro de carga hacia el local del importador.</div>
+                                    <div class="t-title">Disponibilidad</div>
+                                    <div class="t-desc">Recién se puede vender la mercancía.</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 card">
                             <h3 style="color:var(--secondary); border-bottom:2px solid #A7F3D0; padding-bottom:10px; margin-bottom:20px; font-size:1rem;">
-                                <i class="fa-solid fa-bolt"></i> DESPACHO ANTICIPADO
+                                <i class="fa-solid fa-bolt"></i> FLUJO ANTICIPADO
                             </h3>
                             <div class="timeline">
                                 <div class="t-item t-ant">
                                     <div class="t-dot"></div><span class="t-date">DÍA -15</span>
-                                    <div class="t-title">Numeración Anticipada</div>
-                                    <div class="t-desc">Se numera la DUA y se presenta Garantía (Art. 150) antes de la llegada.</div>
+                                    <div class="t-title">Numeración y Garantía</div>
+                                    <div class="t-desc">Se numera la DUA y se presenta Carta Fianza (Art. 150).</div>
                                 </div>
                                 <div class="t-item t-ant">
                                     <div class="t-dot"></div><span class="t-date">DÍA 0 (Llegada)</span>
                                     <div class="t-title">Descarga Directa</div>
-                                    <div class="t-desc">Del puerto al local del importador. Sin depósito temporal.</div>
-                                    <div style="font-size:0.75rem; color:var(--secondary); font-weight:700; margin-top:5px;">
-                                        <i class="fa-solid fa-check"></i> Ahorro de Almacenaje
-                                    </div>
+                                    <div class="t-desc">Levante en 48 horas. Del puerto al local del importador.</div>
+                                    <span class="tag-pay later"><i class="fa-solid fa-piggy-bank"></i> CAJA: -$8,492 USD</span>
+                                </div>
+                                <div class="t-item t-ant">
+                                    <div class="t-dot"></div><span class="t-date">DÍA 1 - 19</span>
+                                    <div class="t-title">Venta Anticipada</div>
+                                    <div class="t-desc">Se vende la mercadería ANTES de pagar los impuestos.</div>
                                 </div>
                                 <div class="t-item t-ant">
                                     <div class="t-dot"></div><span class="t-date">DÍA 20 (Mes Sig.)</span>
                                     <div class="t-title">Liquidación Diferida</div>
-                                    <div class="t-desc">Pago de tributos aduaneros sin intereses tras haber vendido.</div>
-                                    <span class="tag-pay later"><i class="fa-regular fa-clock"></i> PAGO DIFERIDO</span>
+                                    <div class="t-desc">Pago de tributos aduaneros sin intereses.</div>
                                 </div>
                             </div>
                         </div>
@@ -455,7 +467,7 @@
                     break;
 
                 case 2: // BASE IMPONIBLE
-                    content = renderHeader("1. Base Imponible (CIF)", "Valor aduanero invariable.");
+                    content = renderHeader("Parte 1: Base Imponible (CIF)", "Valor comercial de la mercancía.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-8 card">
@@ -469,13 +481,13 @@
                         </div>
                         <div class="col-12 col-md-4 card" style="background:#EFF6FF; border:1px solid #DBEAFE;">
                             <h4 style="color:var(--primary); margin-bottom:10px; font-size:0.9rem;"><i class="fa-solid fa-info-circle"></i> Nota</h4>
-                            <p style="font-size:0.85rem;">El CIF es la base para el cálculo de todos los impuestos posteriores. Es idéntico en ambos escenarios.</p>
+                            <p style="font-size:0.85rem;">El valor CIF es idéntico para ambos casos. La estrategia logística no cambia el valor de la factura ni del flete internacional.</p>
                         </div>
                     </div>`;
                     break;
 
                 case 3: // SEGURO
-                    content = renderHeader("2. Cálculo del Seguro", "Determinación de la póliza.");
+                    content = renderHeader("Parte 2: Cálculo del Seguro", "Determinación de la póliza.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
@@ -491,11 +503,11 @@
                             <div class="chart-box"><canvas id="chart"></canvas></div>
                         </div>
                     </div>`;
-                    setTimeout(() => renderChart('doughnut', ['Prima Neta', 'Impuestos y Tasas'], [37.81, 8.14], [CHART_COLORS.blue, CHART_COLORS.gray]), 100);
+                    setTimeout(() => renderChart('pie', ['Prima Neta', 'Impuestos y Tasas'], [37.81, 8.14], [CHART_COLORS.blue, CHART_COLORS.gray]), 100);
                     break;
 
                 case 4: // IMPUESTOS
-                    content = renderHeader("3. Derechos e Impuestos", "Deuda tributaria generada.");
+                    content = renderHeader("Parte 3: Derechos e Impuestos", "Deuda tributaria generada.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -503,7 +515,7 @@
                                 <thead><tr><th>Tributo</th><th class="amount">Tasa</th><th class="amount">Monto (USD)</th></tr></thead>
                                 <tbody>
                                     <tr><td>Ad Valorem</td><td class="amount">6%</td><td class="amount">$445.85</td></tr>
-                                    <tr><td>Antidumping</td><td class="amount">42.8%</td><td class="amount">$2,522.20</td></tr>
+                                    <tr><td>Antidumping (Defensa)</td><td class="amount">42.8%</td><td class="amount">$2,522.20</td></tr>
                                     <tr><td>IGV + IPM</td><td class="amount">18%</td><td class="amount">$1,417.79</td></tr>
                                     <tr><td>Percepción</td><td class="amount">10%</td><td class="amount">$1,181.67</td></tr>
                                     <tr class="total-row"><td colspan="2">TOTAL DEUDA TRIBUTARIA</td><td class="amount">$5,567.51</td></tr>
@@ -514,7 +526,7 @@
                     break;
 
                 case 5: // GASTOS IMPORTACION
-                    content = renderHeader("4. Gastos de Importación", "Comparativo de eficiencia logística.");
+                    content = renderHeader("Parte 4: Gastos de Importación", "Donde ocurre la magia del ahorro.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
@@ -539,7 +551,7 @@
                     break;
 
                 case 6: // GASTOS FINANCIEROS
-                    content = renderHeader("5. Gastos Financieros", "Costo del apalancamiento fiscal.");
+                    content = renderHeader("Parte 5: Gastos Financieros", "Costo del apalancamiento fiscal.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -550,14 +562,14 @@
                                 <tr class="total-row"><td>TOTAL</td><td class="amount">$40.00</td><td class="amount">$114.31</td></tr>
                             </table></div>
                             <p style="margin-top:15px; color:var(--text-light); font-size:0.85rem;">
-                                * El Anticipado asume un costo financiero extra ($74.31) por la Garantía, necesario para diferir impuestos.
+                                * El Anticipado "cuesta" $74 más por la Garantía, pero este costo permite diferir $5,567 en impuestos. Es una inversión financiera inteligente.
                             </p>
                         </div>
                     </div>`;
                     break;
                 
                 case 7: // CREDITO FISCAL
-                    content = renderHeader("6. Crédito Fiscal", "Impuestos recuperables.");
+                    content = renderHeader("Parte 6: Crédito Fiscal", "Impuestos recuperables.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -569,12 +581,13 @@
                                 <tr><td>IGV Gastos Import.</td><td class="amount">$259.50</td><td class="amount highlight-green">$143.24</td></tr>
                                 <tr class="total-row"><td>TOTAL CRÉDITO</td><td class="amount">$2,865.98</td><td class="amount">$2,749.71</td></tr>
                             </table></div>
+                            <p style="margin-top:10px; font-size:0.8rem; color:#64748B;">Nota: Tienes menos crédito fiscal en el Anticipado porque pagaste menos IGV en gastos logísticos (ahorro).</p>
                         </div>
                     </div>`;
                     break;
 
                 case 8: // COSTO TOTAL (UNITARIOS)
-                    content = renderHeader("7. Costo Total de Importación", "Impacto en Costos Unitarios.");
+                    content = renderHeader("Parte 7: Costo Total de Importación", "Comparación de Costos Unitarios.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -585,7 +598,7 @@
                                         <th class="amount">FOB Unit</th>
                                         <th class="amount">Costo Unit (Dif)</th>
                                         <th class="amount">Costo Unit (Ant)</th>
-                                        <th class="amount">Ahorro</th>
+                                        <th class="amount">Ahorro x Unidad</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -617,7 +630,7 @@
                     break;
 
                 case 9: // PRECIO VENTA (3 PV)
-                    content = renderHeader("8. Precio de Venta Sugerido", "Traslado de eficiencias al cliente.");
+                    content = renderHeader("Parte 8: Precio de Venta Sugerido", "Traslado de eficiencias al cliente.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -651,12 +664,20 @@
                                     </tr>
                                 </tbody>
                             </table></div>
+                            
+                            <div style="margin-top:20px; padding:15px; background:linear-gradient(to right, #EEF2FF, #E0E7FF); border-radius:8px;">
+                                <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:8px;">💡 Análisis de Rentabilidad Oculta</h4>
+                                <p style="font-size:0.9rem; line-height:1.5;">
+                                    Si usaras el Costo Anticipado pero vendieras al Precio Diferido (más caro), tu margen de ganancia tendría que subir del <strong>40% al 47%</strong>. <br>
+                                    ¡Ese 7% extra es dinero puro que se está trasladando al cliente como descuento!
+                                </p>
+                            </div>
                         </div>
                     </div>`;
                     break;
                 
                 case 10: // COMPRAS NACIONALES
-                    content = renderHeader("9. Compras Nacionales", "Registro de adquisiciones locales.");
+                    content = renderHeader("Parte 9: Compras Nacionales", "Registro de adquisiciones locales.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card" style="display:flex; align-items:center; justify-content:center; padding:40px;">
@@ -669,8 +690,8 @@
                     </div>`;
                     break;
 
-                case 11: // LIQUIDACION IGV (Gráfica Comparativa)
-                    content = renderHeader("10. Liquidación del IGV", "Análisis comparativo de carga tributaria.");
+                case 11: // LIQUIDACION IGV
+                    content = renderHeader("Parte 10: Liquidación del IGV", "Análisis comparativo de carga tributaria.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
@@ -708,7 +729,7 @@
                     break;
 
                 case 12: // RESUMEN PAGOS
-                    content = renderHeader("11. Resumen de Pagos", "Liquidación mensual a SUNAT.");
+                    content = renderHeader("Parte 11: Resumen de Pagos", "Liquidación mensual a SUNAT.");
                     content += `
                     <div class="grid">
                         <div class="col-12 card">
@@ -725,7 +746,7 @@
                     break;
 
                 case 13: // ESTADO RESULTADOS
-                    content = renderHeader("12. Estado de Resultados", "Rentabilidad Neta.");
+                    content = renderHeader("Parte 12: Estado de Resultados", "Rentabilidad Neta.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
@@ -749,7 +770,7 @@
                     break;
 
                 case 14: // FLUJO DE CAJA
-                    content = renderHeader("13. Flujo de Caja (Levante)", "Liquidez inmediata.");
+                    content = renderHeader("Parte 13: Flujo de Caja (Levante)", "Liquidez inmediata.");
                     content += `
                     <div class="grid">
                         <div class="col-12 col-md-6 card">
@@ -787,8 +808,8 @@
                                 </div>
                             </div>
                             <div class="control-group col-12" style="grid-column:span 2;">
-                                <label><span>Margen Comercial Objetivo (%)</span> <span id="lblMargen" style="color:white; font-weight:700;">40%</span></label>
-                                <input type="range" id="rngMargen" min="20" max="80" value="40" step="5" oninput="runSim()">
+                                <label><span>Precio de Venta (Margen %)</span> <span id="lblMargen" style="color:white; font-weight:700;">40%</span></label>
+                                <input type="range" id="rngMargen" min="20" max="80" value="40" step="1" oninput="runSim()">
                             </div>
                         </div>
 
@@ -808,7 +829,7 @@
                                 <div class="kpi-val" id="valUtil">S/ 0</div>
                             </div>
                             <div class="kpi-card" id="kpi4">
-                                <div class="kpi-lbl">Precio Venta Prom.</div>
+                                <div class="kpi-lbl">PVP Promedio</div>
                                 <div class="kpi-val" id="valPvp">$0</div>
                             </div>
                         </div>
@@ -884,22 +905,20 @@
 
             // CONSTANTS
             const flete = 1500;
-            const seguro = 45; // Approx fix
+            const seguro = 45; 
             const cif = fob + flete + seguro;
             
             // Logística Variable (High Eff = Low Cost)
-            // Max cost (Diferido) approx 1450, Min cost (Anticipado) approx 800
             const costoLogMax = 1450; 
             const costoLogMin = 800;
             const logistica = costoLogMax - ((costoLogMax - costoLogMin) * eff);
             
-            // Financiero (High Eff = Higher cost due to Guarantee)
+            // Financiero
             const finMin = 40; 
             const finMax = 115; 
             const financiero = finMin + ((finMax - finMin) * eff);
 
-            // Impuestos (Aprox 75% del CIF en este caso con antidumping)
-            // Ratio base: CIF 7430 -> Taxes 5567 (Ratio 0.75)
+            // Impuestos (Ratio base: CIF 7430 -> Taxes 5567)
             const impuestos = cif * 0.75;
             
             // Costo Total Import
@@ -913,8 +932,7 @@
             const cajaHoy = (fob + flete + seguro + logistica + financiero) + impuestosHoy;
 
             // Ventas
-            // Costo Unitario Promedio (para calculo simple)
-            const costoUnitarioPromedio = costoTotal / 680; // 680 pares
+            const costoUnitarioPromedio = costoTotal / 680; 
             const precioVentaUnit = costoUnitarioPromedio * (1 + margen);
             const ventasTotales = precioVentaUnit * 680;
             
@@ -935,37 +953,33 @@
 
             // Thresholds
             if (!isAnticipado) {
-                // Mal escenario de liquidez
                 kpiCaja.className = 'kpi-card danger';
-                expl.innerHTML = `<strong>ALERTA DE LIQUIDEZ (Diferido):</strong> Baja eficiencia logística. Estás pagando impuestos HOY ($${Math.round(impuestos).toLocaleString()}) + costos de almacenaje. Tu flujo de caja sufre.`;
+                expl.innerHTML = `<strong>⚠️ ALERTA DE LIQUIDEZ:</strong> Estás operando como Despacho Diferido. Tu flujo de caja se desangra hoy ($${Math.round(cajaHoy).toLocaleString()}) por pagar impuestos y almacenaje.`;
             } else {
-                // Buen escenario liquidez
                 kpiCaja.className = 'kpi-card success';
-                expl.innerHTML = `<strong>BUEN FLUJO DE CAJA (Anticipado):</strong> Alta eficiencia. Has diferido los impuestos y eliminado el almacenaje. Liquidez preservada.`;
+                expl.innerHTML = `<strong>✅ EFICIENCIA FINANCIERA:</strong> Operación Anticipada. Has protegido tu caja hoy ($${Math.round(cajaHoy).toLocaleString()}) y diferido el pago fuerte.`;
             }
 
-            // Utilidad check (si margen es muy bajo)
             if (margen < 0.3) {
                 kpiUtil.className = 'kpi-card danger';
-                expl.innerHTML += `<br><span style="color:#EF4444;">Cuidado: Tu margen comercial es muy bajo, riesgo de pérdida.</span>`;
+                expl.innerHTML += `<br><span style="color:#FCA5A5;">Cuidado: Tu margen comercial es riesgoso (<30%). Podrías perder dinero ante imprevistos.</span>`;
             } else {
                 kpiUtil.className = 'kpi-card success';
             }
 
-            // SIM CHART: LINE CHART (Cash Flow Projection)
+            // SIM CHART: LINE CHART
             const ctxSim = document.getElementById('simChart').getContext('2d');
             if(simChart) simChart.destroy();
 
-            // Puntos
             const t0 = -cajaHoy; 
-            const t15 = -cajaHoy + (ventasTotales * 0.4); // Ventas parciales
+            const t15 = -cajaHoy + (ventasTotales * 0.4); 
             const t20_pago = isAnticipado ? impuestos : 0; 
             const t30 = -cajaHoy + ventasTotales - t20_pago;
 
             simChart = new Chart(ctxSim, {
                 type: 'line',
                 data: {
-                    labels: ['Día 0', 'Día 15', 'Día 20 (Pago)', 'Día 30'],
+                    labels: ['Día 0', 'Día 15', 'Día 20', 'Día 30'],
                     datasets: [{
                         label: 'Flujo de Caja Acumulado',
                         data: [t0, t15, t15 - t20_pago, t30],
